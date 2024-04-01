@@ -1,5 +1,7 @@
 # Service Sharing Environments - NATS
 
+This repository hosts the source files and documentation for the final project of the Service Sharing Environments course (2023/2024) at AGH UST. The project focuses on utilizing NATS technology.
+
 ## Authors
 
 Authors:

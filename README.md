@@ -120,6 +120,8 @@ NATS emerges as a versatile messaging solution, blending simplicity, performance
 
 ## 3. Case study concept description
 
+![Case study](./img/system.drawio.png)
+
 ## 4. Solution Architecture
 
 ## 5. Environment configuration description

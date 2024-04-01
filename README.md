@@ -39,7 +39,7 @@ NATS (Not Another Typical System) is a lightweight, high-performance messaging s
 
 #### JetStream
 
-NATS JetStream enhances the capabilities of NATS by providing durable and persistent messaging features, ensuring message durability, retention, and replayability..
+NATS JetStream enhances the capabilities of NATS by providing durable and persistent messaging features, ensuring message durability, retention, and replayability.
 
 ##### Key Features
 
@@ -85,7 +85,7 @@ NATS excels in supporting streams and services through built-in publish/subscrib
 
 ##### Delivery Guarantees
 
-While Kafka provides robust at least once and exactly once delivery guarantees, NATS and RabbitMQ offer similar guarantees but may lack exactly once support in certain configurations. gRPC, on the other hand, focuses primarily on at most once delivery.
+While Kafka provides robust at-least-once and exactly-once delivery guarantees, NATS and RabbitMQ offer similar guarantees but may lack exactly-once support in certain configurations. gRPC, on the other hand, focuses primarily on at-most-once delivery.
 
 ##### Multi-tenancy and Sharing
 
@@ -121,9 +121,30 @@ NATS emerges as a versatile messaging solution, blending simplicity, performance
 
 ## 3. Case study concept description
 
-![Case study diagram](./img/system.drawio.png)
+#### Objectives
+
+The main objectives of this case study are:
+
+- Test various build-in patterns: publish/subscribe, request-reply and load-balanced queue subscriber.
+- Test connection between the NATS servers.
+- Test fault-tolerance by turning off one of the NATS servers.
+- Perform real-life use cases with an emphasis on stressing the system due to the influx of messages.
+
+#### Methodology
+
+Presented objectives of this study will be achieved by following steps:
+
+- **Real-life use cases creation**: We will create architecture of the system to present all needed features of studie technology.
+- **Environment creation**: Appropriate environment will be created according to the schema.
+- **Conduct the tests**: When the system will be finished, we want to execute various tests and collect the needed data to further analysis.
+- **Analyze the results**: Collected data will be analysed and conclusions will be gathered.
+- **Presentation of the results**: We will show obtained conclusions and convey our opinion about NATS technology.
 
 ## 4. Solution Architecture
+
+![Case study diagram](./img/system.drawio.black.png)
+
+The solution contains three NATS servers connected in one cluster. Architecture includes several objects that could be found in any house, eg. lights, fridge, air conditioners or furnance. Those objects will help us expose some features of NATS technology. Description of those objects could be found in above diagram. All build-in patterns are included in schema: publish/subscribe, request-reply and load-balanced queue subscriber.
 
 ## 5. Environment configuration description
 

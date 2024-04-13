@@ -150,6 +150,50 @@ The solution contains three NATS servers connected in one cluster. Architecture 
 
 ## 6. Installation method
 
+### Docker
+
+Deploy a 3-node cluster with JetStream support using Docker containers. Each container mounts the NATS cluster configuration from docker/cluster/nats.conf. Please note, switching between containers in case of failure is not supported due to the absence of a load balancer.
+
+```sh
+docker compose -f deployment/docker/docker-compose.yaml up -d --build
+```
+
+### Terrafor and Helm
+
+```sh
+cd helm
+
+terraform apply
+```
+
+If your kubeconfig path differs from the default, include the flag -var kubeconfig="/path/to/config".
+
+Upon completion, the NATS Load Balancer IP address will be displayed as an output of the terraform apply command. If you missed it, retrieve it using terraform output.
+
+Add JetStream Stream:
+
+```sh
+cd jetstream
+
+terraform apply -var servers="<nats-lb-ip>"
+```
+
+Remove JetStream Stream:
+
+```sh
+cd jetstream
+
+terraform destroy
+```
+
+Destroy Cluster:
+
+```sh
+cd jetstream
+
+terraform destroy
+```
+
 ## 7. How to reproduce - step by step
 
 ## 8. Demo deployment steps

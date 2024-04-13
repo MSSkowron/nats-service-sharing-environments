@@ -1,0 +1,20 @@
+nats:
+  jetstream:
+    enabled: true
+
+    fileStorage:
+      enabled: true
+      storageClassName: "cinder-gp-hdd-retain" # change if neccessary
+
+cluster:
+  enabled: true
+  noAdvertise: true
+
+  authorization:
+    user: admin
+    password: admin
+    timeout: 0
+
+# leafnodes:
+#   enabled: true
+#   noAdvertise: true

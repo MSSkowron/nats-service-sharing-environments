@@ -20,3 +20,11 @@ resource "jetstream_stream" "ORDERS" {
   max_age  = 60 * 60 * 24 * 365
 }
 
+# resource "jetstream_consumer" "ORDERS_NEW" {
+#   stream_id      = jetstream_stream.ORDERS.id
+#   durable_name   = "NEW"
+#   deliver_all    = true
+#   filter_subject = "ORDERS.received"
+#   sample_freq    = 100
+# }
+

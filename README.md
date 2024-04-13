@@ -163,6 +163,7 @@ docker compose -f deployment/docker/docker-compose.yaml up -d --build
 ```sh
 cd helm
 
+terraform init
 terraform apply
 ```
 
@@ -175,22 +176,19 @@ Add JetStream Stream:
 ```sh
 cd jetstream
 
+terraform init
 terraform apply -var servers="<nats-lb-ip>"
 ```
 
 Remove JetStream Stream:
 
 ```sh
-cd jetstream
-
 terraform destroy
 ```
 
 Destroy Cluster:
 
 ```sh
-cd jetstream
-
 terraform destroy
 ```
 

@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: on-failure
+    networks: ["suu"]
+
+networks:
+  suu:
+    name: suu
+    external: true

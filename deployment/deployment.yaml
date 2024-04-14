@@ -9,13 +9,13 @@ metadata:
   name: nats
   namespace: nats
 spec:
+  type: LoadBalancer
   selector:
     app: nats
   ports:
   - port: 4222
     protocol: TCP
     targetPort: 4222
-  clusterIP: None
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

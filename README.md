@@ -158,39 +158,13 @@ Deploy a 3-node cluster with JetStream support using Docker containers. Each con
 docker compose -f deployment/docker/docker-compose.yaml up -d --build
 ```
 
-### Terrafor and Helm
+### AWS
 
-```sh
-cd helm
+- Update the kubeconfig:
 
-terraform init
-terraform apply
-```
-
-If your kubeconfig path differs from the default, include the flag -var kubeconfig="/path/to/config".
-
-Upon completion, the NATS Load Balancer IP address will be displayed as an output of the terraform apply command. If you missed it, retrieve it using terraform output.
-
-Add JetStream Stream:
-
-```sh
-cd jetstream
-
-terraform init
-terraform apply -var servers="<nats-lb-ip>"
-```
-
-Remove JetStream Stream:
-
-```sh
-terraform destroy
-```
-
-Destroy Cluster:
-
-```sh
-terraform destroy
-```
+    ```sh
+    aws eks update-kubeconfig --region us-east-1 --name suu-eks-cluster
+    ```
 
 ## 7. How to reproduce - step by step
 

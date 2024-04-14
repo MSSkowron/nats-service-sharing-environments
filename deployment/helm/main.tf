@@ -32,7 +32,7 @@ resource "helm_release" "nats" {
 data "kubernetes_service" "nats-lb" {
   depends_on = [helm_release.nats]
   metadata {
-    name = var.name + "-lb"
+    name = "nats-lb"
     namespace = var.namespace
   }
 }

@@ -163,7 +163,7 @@ docker compose -f deployment/docker/docker-compose.yaml up -d --build
 - Update the kubeconfig:
 
     ```sh
-    aws eks update-kubeconfig --region us-east-1 --name suu-eks-cluster
+    aws eks update-kubeconfig --region <region> --name <clustername>
     ```
 
 ## 7. How to reproduce - step by step

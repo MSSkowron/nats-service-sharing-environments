@@ -187,10 +187,10 @@ aws eks update-kubeconfig --region <region> --name <clustername>
 
 3. Assign External IP to NATS Service
 
-    To access the NATS service externally, you need to assign an external IP to the nats-lb service. Run the following command:
+    Run the tunnel in a separate terminal:
 
     ```sh
-    minikube service -n default nats-lb
+    minikube tunnel
     ```
 
     This command will provide you with the external IP address to access NATS.

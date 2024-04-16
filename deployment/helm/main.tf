@@ -36,3 +36,7 @@ data "kubernetes_service" "nats-lb" {
     namespace = var.namespace
   }
 }
+
+output "nats-lb-ip" {
+  value = data.kubernetes_service.nats-lb.status != null ? data.kubernetes_service.nats-lb.status.0.load_balancer.0.ingress.0.ip : null
+}

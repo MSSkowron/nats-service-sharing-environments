@@ -160,11 +160,41 @@ docker compose -f deployment/docker/docker-compose.yaml up -d --build
 
 ### AWS
 
-- Update the kubeconfig:
+```sh
+aws eks update-kubeconfig --region <region> --name <clustername>
+```
+
+### Local cluster
+
+1. Install and Start Minikube
+
+    Ensure you have Minikube installed and running on your local machine. If not, you can install it from [here](https://minikube.sigs.k8s.io/docs/start/).
+
+2. Deploy NATS
+
+    Navigate to the deployment/helm directory and initialize Terraform:
 
     ```sh
-    aws eks update-kubeconfig --region <region> --name <clustername>
+    cd deployment/helm
+    terraform init
     ```
+
+    Deploy NATS using Terraform:
+
+    ```sh
+    terraform apply
+    ```
+
+3. Assign External IP to NATS Service
+
+    To access the NATS service externally, you need to assign an external IP to the nats-lb service. Run the following command:
+
+    ```sh
+    minikube service -n default nats-lb
+    ```
+
+    This command will provide you with the external IP address to access NATS.
+
 
 ## 7. How to reproduce - step by step
 

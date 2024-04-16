@@ -164,7 +164,7 @@ docker compose -f deployment/docker/docker-compose.yaml up -d --build
 aws eks update-kubeconfig --region <region> --name <clustername>
 ```
 
-### Local cluster
+### Local Kubernetes cluster
 
 1. Install and Start Minikube
 

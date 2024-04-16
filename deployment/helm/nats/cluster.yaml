@@ -1,13 +1,9 @@
-nats:
-  jetstream:
-    enabled: true
-
-    fileStorage:
-      enabled: true
-      storageClassName: "cinder-gp-hdd-retain" # change if neccessary
+jetstream:
+  enabled: true
 
 cluster:
   enabled: true
+  replicas: 1
   noAdvertise: true
 
   authorization:

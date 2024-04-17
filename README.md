@@ -146,57 +146,69 @@ Presented objectives of this study will be achieved by following steps:
 
 The solution contains three NATS servers connected in one cluster. Architecture includes several objects that could be found in any house, eg. lights, fridge, air conditioners or furnance. Those objects will help us expose some features of NATS technology. Description of those objects could be found in above diagram. All build-in patterns are included in schema: publish/subscribe, request-reply and load-balanced queue subscriber.
 
-## 5. Environment configuration description
+## 5. Environment configuration
+
+Before deploying the NATS cluster, ensure you have the NATS CLI installed. You can find installation instructions [here](https://github.com/nats-io/natscli).
 
 ## 6. Installation method
 
-### Docker
+Deploy the NATS cluster using Docker containers. Make sure you have both Docker and Docker Compose installed. You can find Docker installation instructions [here](https://docs.docker.com/get-docker/) and Docker Compose [here](https://docs.docker.com/compose/).
 
-Deploy a 3-node cluster with JetStream support using Docker containers. Each container mounts the NATS cluster configuration from docker/cluster/nats.conf. Please note, switching between containers in case of failure is not supported due to the absence of a load balancer.
+## 7. How to reproduce - step by step
+
+To establish a 3-node NATS cluster with JetStream support using Docker containers, follow these steps.
+
+Run the following command to initiate three containers (seed, server1, and server2) within the suu network, each configured with NATS cluster settings:
+
+```yaml
+# Client port of 4222 on all interfaces
+port: 4222
+
+# HTTP monitoring port
+monitor_port: 8222
+
+# This is for clustering multiple servers together.
+cluster {
+# It is recommended to set a cluster name
+name: "natscluster"
+
+# Route connections to be received on any interface on port 6222
+port: 6222
+
+# Routes are protected, so need to use them with --routes flag
+# e.g. --routes=nats-route://ruser:T0pS3cr3t@otherdockerhost:6222
+authorization {
+    user: admin
+    password: admin
+    timeout: 2
+}
+
+# Routes are actively solicited and connected to from this server.
+# This Docker image has none by default, but you can pass a
+# flag to the nats-server docker image to create one to an existing server.
+routes = []
+}
+```
+
+Run the provided shell script to configure NATS:
 
 ```sh
 docker compose -f deployment/docker/docker-compose.yaml up -d --build
 ```
 
-### AWS
+After executing the command, the following containers will be created:
+
+- `seed` (Port: 4222)
+- `server1` (Port: 4223)
+- `server2` (Port: 4224)
+
+Once executed, your NATS cluster, comprising three servers with JetStream, will be operational. To find the IP addresses of each server for connections outside the suu network, use:
 
 ```sh
-aws eks update-kubeconfig --region <region> --name <clustername>
+docker network inspect suu
 ```
 
-### Local Kubernetes cluster
-
-1. Install and Start Minikube
-
-    Ensure you have Minikube installed and running on your local machine. If not, you can install it from [here](https://minikube.sigs.k8s.io/docs/start/).
-
-2. Deploy NATS
-
-    Navigate to the deployment/helm directory and initialize Terraform:
-
-    ```sh
-    cd deployment/helm
-    terraform init
-    ```
-
-    Deploy NATS using Terraform:
-
-    ```sh
-    terraform apply
-    ```
-
-3. Assign External IP to NATS Service
-
-    Run the tunnel in a separate terminal:
-
-    ```sh
-    minikube tunnel
-    ```
-
-    This command will provide you with the external IP address to access NATS.
-
-
-## 7. How to reproduce - step by step
+Please note, due to the absence of a load balancer, switching between containers in case of failure is not supported.
 
 ## 8. Demo deployment steps
 

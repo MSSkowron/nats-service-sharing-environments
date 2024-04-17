@@ -1,6 +1,7 @@
 version: "3.5"
 services:
   seed:
+    container_name: seed
     image: nats
     ports:
       - "8222:8222" # reporting
@@ -10,6 +11,7 @@ services:
     command: "--debug --http_port 8222 --c cluster/nats.conf --routes nats://admin:admin@seed:6222 --sd /cluster --js --server_name seed_1"
     networks: ["suu"]
   server1:
+    container_name: server1
     image: nats
     ports:
       - "8223:8222" # reporting
@@ -19,6 +21,7 @@ services:
     command: "--debug --routes nats://admin:admin@seed:6222 --http_port 8222 --c cluster/nats.conf --sd /cluster --js --server_name server_1"
     networks: ["suu"]
   server2:
+    container_name: server2
     image: nats
     ports:
       - "8224:8222" # reporting

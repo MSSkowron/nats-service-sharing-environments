@@ -202,7 +202,15 @@ After executing the command, the following containers will be created:
 - `server1` (Port: 4223)
 - `server2` (Port: 4224)
 
-Once executed, your NATS cluster, comprising three servers with JetStream, will be operational. To find the IP addresses of each server for connections outside the suu network, use:
+Once executed, your NATS cluster, comprising three servers with JetStream, will be operational.
+
+Execute the setup script to initialize the NATS cluster:
+
+```sh
+./deployment/docker/setup.sh
+```
+
+To find the IP addresses of each server for connections outside the suu network, use:
 
 ```sh
 docker network inspect suu

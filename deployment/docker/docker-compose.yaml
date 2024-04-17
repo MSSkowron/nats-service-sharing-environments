@@ -7,7 +7,7 @@ services:
       - "4222:4222" # connecting
     volumes:
       - ./cluster:/cluster
-    command: "--debug --http_port 8222 --c cluster/nats.conf --routes nats://admin:admin@seed:6222 --sd /data --js --server_name seed_1"
+    command: "--debug --http_port 8222 --c cluster/nats.conf --routes nats://admin:admin@seed:6222 --sd /cluster --js --server_name seed_1"
     networks: ["suu"]
   server1:
     image: nats
@@ -16,7 +16,7 @@ services:
       - "4223:4222" # connecting
     volumes:
       - ./cluster:/cluster
-    command: "--debug --routes nats://admin:admin@seed:6222 --http_port 8222 --c cluster/nats.conf --sd /data --js --server_name server_1"
+    command: "--debug --routes nats://admin:admin@seed:6222 --http_port 8222 --c cluster/nats.conf --sd /cluster --js --server_name server_1"
     networks: ["suu"]
   server2:
     image: nats
@@ -25,7 +25,7 @@ services:
       - "4224:4222" # connecting
     volumes:
       - ./cluster:/cluster
-    command: "--debug --routes nats://admin:admin@seed:6222 --http_port 8222 --c cluster/nats.conf --sd /data --js --server_name server_2"
+    command: "--debug --routes nats://admin:admin@seed:6222 --http_port 8222 --c cluster/nats.conf --sd /cluster --js --server_name server_2"
     networks: ["suu"]
 networks:
   suu:

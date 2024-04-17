@@ -30,6 +30,7 @@ services:
       - ./cluster:/cluster
     command: "--debug --routes nats://admin:admin@seed:6222 --http_port 8222 --c cluster/nats.conf --sd /cluster --js --server_name server_2"
     networks: ["suu"]
+    
 networks:
   suu:
     name: suu

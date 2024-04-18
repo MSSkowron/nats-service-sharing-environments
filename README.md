@@ -211,7 +211,7 @@ nats context save nats3 --server nats://admin:admin@localhost:4224 --description
 
 To establish a 3-node NATS cluster with JetStream support using Docker containers, follow the steps below:
 
-1. Run the provided shell script to configure NATS:
+1. Run the following docker compose comand to create NATS cluster:
 
    ```sh
    docker compose -f deployment/docker/docker-compose.yaml up -d --build

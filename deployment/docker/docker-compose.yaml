@@ -19,7 +19,7 @@ services:
     volumes:
       - ./cluster/nats2:/data
     networks: ["suu"]
-    command: "--debug --name nats2 --server_name nats2 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data " 
+    command: "--debug --name nats2 --server_name nats2 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data" 
   nats3:
     container_name: nats3
     image: nats
@@ -29,7 +29,7 @@ services:
     volumes:
       - ./cluster/nats3:/data
     networks: ["suu"]
-    command: "--debug --name nats3 --server_name nats3 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data " 
+    command: "--debug --name nats3 --server_name nats3 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data" 
     
 networks:
   suu:

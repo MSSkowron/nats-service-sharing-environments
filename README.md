@@ -233,8 +233,6 @@ To establish a 3-node NATS cluster with JetStream support using Docker container
     docker network inspect suu
     ```
 
-Please note, due to the absence of a load balancer, automatic switching between containers in case of failure is not supported.
-
 ## 8. Demo deployment steps
 
 ## 9. Summary

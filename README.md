@@ -156,39 +156,7 @@ Deploy the NATS cluster using Docker containers. Make sure you have both Docker 
 
 ## 7. How to reproduce - step by step
 
-To establish a 3-node NATS cluster with JetStream support using Docker containers, follow these steps.
-
-Run the following command to initiate three containers (seed, server1, and server2) within the suu network, each configured with NATS cluster settings:
-
-```yaml
-# Client port of 4222 on all interfaces
-port: 4222
-
-# HTTP monitoring port
-monitor_port: 8222
-
-# This is for clustering multiple servers together.
-cluster {
-# It is recommended to set a cluster name
-name: "natscluster"
-
-# Route connections to be received on any interface on port 6222
-port: 6222
-
-# Routes are protected, so need to use them with --routes flag
-# e.g. --routes=nats-route://ruser:T0pS3cr3t@otherdockerhost:6222
-authorization {
-    user: admin
-    password: admin
-    timeout: 2
-}
-
-# Routes are actively solicited and connected to from this server.
-# This Docker image has none by default, but you can pass a
-# flag to the nats-server docker image to create one to an existing server.
-routes = []
-}
-```
+To establish a 3-node NATS cluster with JetStream support using Docker containers, follow below steps.
 
 Run the provided shell script to configure NATS:
 
@@ -198,9 +166,9 @@ docker compose -f deployment/docker/docker-compose.yaml up -d --build
 
 After executing the command, the following containers will be created:
 
-- `seed` (Port: 4222)
-- `server1` (Port: 4223)
-- `server2` (Port: 4224)
+- `nats1` (Port: 4222)
+- `nats2` (Port: 4223)
+- `nats3` (Port: 4224)
 
 Once executed, your NATS cluster, comprising three servers with JetStream, will be operational.
 

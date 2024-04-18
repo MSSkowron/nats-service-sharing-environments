@@ -148,43 +148,92 @@ The solution contains three NATS servers connected in one cluster. Architecture 
 
 ## 5. Environment configuration
 
-Before deploying the NATS cluster, ensure you have the NATS CLI installed. You can find installation instructions [here](https://github.com/nats-io/natscli).
+Make sure you have the following tools installed:
+
+- [NATS CLI](https://github.com/nats-io/natscli)
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
 ## 6. Installation method
 
-Deploy the NATS cluster using Docker containers. Make sure you have both Docker and Docker Compose installed. You can find Docker installation instructions [here](https://docs.docker.com/get-docker/) and Docker Compose [here](https://docs.docker.com/compose/).
+We will use the following `docker-compose.yaml` configuration file:
+
+```yaml
+version: "3.5"
+services:
+  nats1:
+    container_name: nats1
+    image: nats
+    ports:
+      - "8222:8222"
+      - "4222:4222"
+    volumes:
+      - ./cluster/nats1:/data
+    networks: ["suu"]
+    command: "-DV --name nats1 --server_name nats1 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data"
+  nats2:
+    container_name: nats2
+    image: nats
+    ports:
+      - "8223:8222"
+      - "4223:4222"
+    volumes:
+      - ./cluster/nats2:/data
+    networks: ["suu"]
+    command: "-DV --name nats2 --server_name nats2 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data"
+  nats3:
+    container_name: nats3
+    image: nats
+    ports:
+      - "8224:8222"
+      - "4224:4222"
+    volumes:
+      - ./cluster/nats3:/data
+    networks: ["suu"]
+    command: "-DV --name nats3 --server_name nats3 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data"
+
+networks:
+  suu:
+    name: suu
+```
+
+We will use the following `setup.sh` configuration script:
+
+```sh
+#!/bin/bash
+
+ehco 'TODO'
+```
 
 ## 7. How to reproduce - step by step
 
-To establish a 3-node NATS cluster with JetStream support using Docker containers, follow below steps.
+To establish a 3-node NATS cluster with JetStream support using Docker containers, follow the steps below:
 
-Run the provided shell script to configure NATS:
+1. Run the provided shell script to configure NATS:
 
-```sh
-docker compose -f deployment/docker/docker-compose.yaml up -d --build
-```
+    ```sh
+    docker compose -f deployment/docker/docker-compose.yaml up -d --build
+    ```
 
-After executing the command, the following containers will be created:
+    After executing the command, the following NATS servers (containers) with JetStream will be created:
 
-- `nats1` (Port: 4222)
-- `nats2` (Port: 4223)
-- `nats3` (Port: 4224)
+    - `nats1` (Port: 4222)
+    - `nats2` (Port: 4223)
+    - `nats3` (Port: 4224)
 
-Once executed, your NATS cluster, comprising three servers with JetStream, will be operational.
+2. Execute the setup script to initialize the NATS cluster:
 
-Execute the setup script to initialize the NATS cluster:
+    ```sh
+    ./deployment/docker/setup.sh
+    ```
 
-```sh
-./deployment/docker/setup.sh
-```
+3. To find the IP addresses of each server for connections outside the Docker's  network, use:
 
-To find the IP addresses of each server for connections outside the suu network, use:
+    ```sh
+    docker network inspect suu
+    ```
 
-```sh
-docker network inspect suu
-```
-
-Please note, due to the absence of a load balancer, switching between containers in case of failure is not supported.
+Please note, due to the absence of a load balancer, automatic switching between containers in case of failure is not supported.
 
 ## 8. Demo deployment steps
 
@@ -192,4 +241,4 @@ Please note, due to the absence of a load balancer, switching between containers
 
 ## 10. References
 
-- https://nats.io/
+- <https://nats.io/>

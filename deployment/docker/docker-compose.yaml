@@ -1,35 +1,35 @@
 version: "3.5"
 services:
-  seed:
-    container_name: seed
+  nats1:
+    container_name: nats1
     image: nats
     ports:
       - "8222:8222" # reporting
       - "4222:4222" # connecting
     volumes:
-      - ./cluster:/cluster
-    command: "--debug --http_port 8222 --c cluster/nats.conf --routes nats://admin:admin@seed:6222 --sd /cluster --js --server_name seed_1"
+      - ./cluster/nats1:/data
     networks: ["suu"]
-  server1:
-    container_name: server1
+    command: "--debug --name nats1 --server_name nats1 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data"    
+  nats2:
+    container_name: nats2
     image: nats
     ports:
       - "8223:8222" # reporting
       - "4223:4222" # connecting
     volumes:
-      - ./cluster:/cluster
-    command: "--debug --routes nats://admin:admin@seed:6222 --http_port 8222 --c cluster/nats.conf --sd /cluster --js --server_name server_1"
+      - ./cluster/nats2:/data
     networks: ["suu"]
-  server2:
-    container_name: server2
+    command: "--debug --name nats2 --server_name nats2 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data " 
+  nats3:
+    container_name: nats3
     image: nats
     ports:
       - "8224:8222" # reporting
       - "4224:4222" # connecting
     volumes:
-      - ./cluster:/cluster
-    command: "--debug --routes nats://admin:admin@seed:6222 --http_port 8222 --c cluster/nats.conf --sd /cluster --js --server_name server_2"
+      - ./cluster/nats3:/data
     networks: ["suu"]
+    command: "--debug --name nats3 --server_name nats3 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data " 
     
 networks:
   suu:

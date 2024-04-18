@@ -202,7 +202,9 @@ We will use the following `setup.sh` configuration script:
 ```sh
 #!/bin/bash
 
-ehco 'TODO'
+nats context save nats1 --server nats://admin:admin@localhost:4222 --description 'NATS Server localhost:4222'
+nats context save nats2 --server nats://admin:admin@localhost:4223 --description 'NATS Server localhost:4223'
+nats context save nats3 --server nats://admin:admin@localhost:4224 --description 'NATS Server localhost:4224'
 ```
 
 ## 7. How to reproduce - step by step
@@ -211,27 +213,38 @@ To establish a 3-node NATS cluster with JetStream support using Docker container
 
 1. Run the provided shell script to configure NATS:
 
-    ```sh
-    docker compose -f deployment/docker/docker-compose.yaml up -d --build
-    ```
+   ```sh
+   docker compose -f deployment/docker/docker-compose.yaml up -d --build
+   ```
 
-    After executing the command, the following NATS servers (containers) with JetStream will be created:
+   After executing the command, the following NATS servers (containers) with JetStream functionality will be created:
 
-    - `nats1` (Port: 4222)
-    - `nats2` (Port: 4223)
-    - `nats3` (Port: 4224)
+   - `nats1`
+
+     - Connection URL: `nats://admin:admin@localhost:4222`
+     - Dashboard Access: <http://localhost:8222>
+
+   - `nats2`
+
+     - Connection URL: `nats://admin:admin@localhost:4223`
+     - Dashboard Access: <http://localhost:8223>
+
+   - `nats3`
+
+     - Connection URL: `nats://admin:admin@localhost:4224`
+     - Dashboard Access: <http://localhost:8224>
 
 2. Execute the setup script to initialize the NATS cluster:
 
-    ```sh
-    ./deployment/docker/setup.sh
-    ```
+   ```sh
+   ./deployment/docker/setup.sh
+   ```
 
-3. To find the IP addresses of each server for connections outside the Docker's  network, use:
+3. To find the IP addresses of each server for connections outside the Docker's network, use:
 
-    ```sh
-    docker network inspect suu
-    ```
+   ```sh
+   docker network inspect suu
+   ```
 
 ## 8. Demo deployment steps
 

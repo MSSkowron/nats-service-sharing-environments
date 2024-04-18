@@ -240,12 +240,6 @@ To establish a 3-node NATS cluster with JetStream support using Docker container
    ./deployment/docker/setup.sh
    ```
 
-3. To find the IP addresses of each server for connections outside the Docker's network, use:
-
-   ```sh
-   docker network inspect suu
-   ```
-
 ## 8. Demo deployment steps
 
 ## 9. Summary

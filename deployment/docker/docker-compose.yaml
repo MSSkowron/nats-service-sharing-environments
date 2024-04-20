@@ -9,7 +9,7 @@ services:
     volumes:
       - ./cluster/nats1:/data
     networks: ["suu"]
-    command: "-DV --name nats1 --server_name nats1 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data"  
+    command: "-DV --name nats1 --server_name nats1 --cluster_name natscluster --http_port 8222 --config /data/nats.conf --routes nats-route://admin:admin@nats1:6222,nats-route://admin:admin@nats2:6222,nats-route://admin:admin@nats3:6222 --jetstream --store_dir /data"
   nats2:
     container_name: nats2
     image: nats
@@ -36,25 +36,7 @@ services:
       context: ./publisher
       dockerfile: Dockerfile
     networks: ["suu"]
-    image: publisher
-  light1:
-    container_name: light1
-    build:
-      context: ./devices/light
-      dockerfile: Dockerfile
-    networks: ["suu"]
-    environment:
-      LIGHT_NAME: "Main"
-      LIGHT_ROOM: "Kitchen"
-    image: light
-  light2:
-    container_name: light2
-    image: light
-    networks: ["suu"]
-    environment:
-      LIGHT_NAME: "Fridge"
-      LIGHT_ROOM: "Kitchen"
-    
+
 networks:
   suu:
     name: suu

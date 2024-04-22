@@ -250,15 +250,15 @@ To establish a 3-node NATS cluster with JetStream support using Docker container
 
 ## 8. Demo deployment steps
 
-Before proceeding with the deployment of IoT devices, ensure that your NATS cluster is deployed and properly configured as per the previous steps.
+Before initiating the deployment of IoT devices, ensure that your NATS cluster is deployed and correctly configured as outlined in the previous steps.
 
 ### Devices
 
-To deploy IoT devices run the following commands:
+To deploy IoT devices, follow these steps:
 
 - **Lights**
 
-  Run the following command, replacing <number_of_lights> with the desired quantity of lights:
+  Run the command below, replacing <number_of_lights> with the desired quantity of lights:
 
   ```sh
   ./deployment/devices/light/run.sh <number_of_lights>
@@ -278,7 +278,19 @@ To deploy IoT devices run the following commands:
 
 ### Publisher
 
+Run the following command to start the publisher:
+
+```sh
+./deployment/publisher/run.sh
+```
+
 ### Admin
+
+Run the following command to start the admin:
+
+```sh
+./deployment/admin/run.sh
+```
 
 ## 9. Summary
 

@@ -5,10 +5,10 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the Python script into the container
-COPY publisher.py .
+COPY main.py .
 
 # Install the required Python packages
 RUN pip install nats-py
 
 # Define the command to run the script
-CMD ["python", "publisher.py"]
+CMD ["python", "main.py"]

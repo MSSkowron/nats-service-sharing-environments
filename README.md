@@ -277,7 +277,7 @@ To deploy IoT devices, follow these steps:
   Run the following command, replacing <number_of_fridges> with the desired quantity of fridges:
 
   ```sh
-  ./deployment/devices/air_conditioner/run.sh <number_of_fridges>
+  ./deployment/devices/fridge/run.sh <number_of_fridges>
   ```
 
 - **Furnances**
@@ -285,7 +285,7 @@ To deploy IoT devices, follow these steps:
   Run the following command, replacing <number_of_furnances> with the desired quantity of furnances:
 
   ```sh
-  ./deployment/devices/air_conditioner/run.sh <number_of_furnances>
+  ./deployment/devices/furnance/run.sh <number_of_furnances>
   ```
 
 ### Publisher

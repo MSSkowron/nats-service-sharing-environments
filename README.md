@@ -144,7 +144,15 @@ Presented objectives of this study will be achieved by following steps:
 
 ![Case study diagram](./img/system.drawio.black.png)
 
-The solution contains three NATS servers connected in one cluster. Architecture includes several objects that could be found in any house, eg. lights, fridge, air conditioners or furnance. Those objects will help us expose some features of NATS technology. Description of those objects could be found in above diagram. All build-in patterns are included in schema: publish/subscribe, request-reply and load-balanced queue subscriber.
+The architecture leverages NATS for facilitating communication among IoT devices such as lamps, etc., with NATS serving as a mediator for message transmission.
+
+The setup comprises three NATS servers interconnected within a single cluster.
+
+Within this architecture, various household devices are represented, such as lights, fridges, air conditioners, or furnaces. These devices showcase the capabilities of NATS technology. Further details on these objects are provided in the diagram above. The architecture incorporates built-in patterns, including publish/subscribe, request-reply, and load-balanced queue subscriber.
+
+Those objects will help us expose some features of NATS technology. Description of those objects could be found in above diagram. All build-in patterns are included in schema: publish/subscribe, request-reply and load-balanced queue subscriber.
+
+This setup enables efficient communication and processing of messages, ensuring seamless interaction among devices while offering features like persistent data reading from the beginning through JetStream functionality for administrators.
 
 ## 5. Environment configuration
 
@@ -214,7 +222,7 @@ To establish a 3-node NATS cluster with JetStream support using Docker container
 1. Run the following docker compose comand to create NATS cluster:
 
    ```sh
-   docker compose -f deployment/docker/docker-compose.yaml up -d --build
+   docker compose -f deployment/cluster/docker-compose.yaml up -d --build
    ```
 
    After executing the command, the following NATS servers (containers) with JetStream functionality will be created:
@@ -237,13 +245,47 @@ To establish a 3-node NATS cluster with JetStream support using Docker container
 2. Execute the setup script to initialize the NATS cluster:
 
    ```sh
-   ./deployment/docker/setup.sh
+   ./deployment/cluster/setup.sh
    ```
 
 ## 8. Demo deployment steps
 
+Before proceeding with the deployment of IoT devices, ensure that your NATS cluster is deployed and properly configured as per the previous steps.
+
+### Devices
+
+To deploy IoT devices run the following commands:
+
+- **Lights**
+
+  Run the following command, replacing <number_of_lights> with the desired quantity of lights:
+
+  ```sh
+  ./deployment/devices/light/run.sh <number_of_lights>
+  ```
+
+- **Air Conditioners**
+
+  Run the following command, replacing <number_of_air_conditioners> with the desired quantity of air conditioners:
+
+  ```sh
+  ./deployment/devices/air_conditioner/run.sh <number_of_air_conditioners>
+  ```
+
+- **Fridges**
+
+- **Furnances**
+
+### Publisher
+
+### Admin
+
 ## 9. Summary
+
+In conclusion, our exploration of NATS technology and the execution of the case study provided valuable insights into its strengths, limitations, and practical applications. NATS emerged as a versatile messaging solution, offering simplicity, performance, and scalability essential for modern distributed systems.
 
 ## 10. References
 
-- <https://nats.io/>
+- [NATS Official Website](https://nats.io)
+- [NATS GitHub Repository](https://github.com/nats-io)
+- [CNCF NATS Project](https://www.cncf.io/projects/nats)

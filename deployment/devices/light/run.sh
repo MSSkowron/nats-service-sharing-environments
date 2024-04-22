@@ -8,7 +8,7 @@ fi
 docker build -t light .
 
 for ((i=1; i<=$1; i++)); do
-    rooms=("Kitchen" "Bathroom")
+    rooms=("Kitchen" "Living Room", "Boiler Room")
     random_room=${rooms[RANDOM % ${#rooms[@]}]}
 
     LIGHT_NAME="light-$i"

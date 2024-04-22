@@ -12,31 +12,22 @@ async def main(light_name, light_room):
     nc = await nats.connect("nats://admin:admin@nats3:4222")
     js = nc.jetstream()
 
-    # # to remove
-    # try:
-    #     await js.delete_stream(name="device-stream")
-    # except:
-    #     pass
-    # finally:
-    #     await js.add_stream(name="device-stream",
-    #                         subjects=[f"lights/{light_room}/{light_name}/change", f"lights/{light_room}/change",
-    #                                   "lights/change", "publisher/add", "publisher/detect"])
-
     async def light_handler(msg):
         global light_on
         light_on = struct.unpack('?', msg.data)[0]
         print(f"Received message: {light_on}")
 
-    # async def status_handler(msg):
-    #     global light_on
-    #     await js.publish("publisher/add", f"lights/{light_room}/{light_name}/{light_on}".encode())
+    await js.subscribe(f"lights.{light_room}.{light_name}.change", cb=light_handler)
+    await js.subscribe(f"lights.{light_room}.change", cb=light_handler)
+    await js.subscribe("lights.change", cb=light_handler)
 
-    await js.subscribe(f"lights/{light_room}/{light_name}/change", cb=light_handler)
-    await js.subscribe(f"lights/{light_room}/change", cb=light_handler)
-    await js.subscribe("lights/change", cb=light_handler)
-    # await js.subscribe("publisher/detect", cb=status_handler)
+    async def status_handler(msg):
+        global light_on
+        await js.publish("publishers.device", f"lights.{light_room}.{light_name}.{light_on}".encode())
 
-    # await js.publish("publisher/add", f"lights/{light_room}/{light_name}/{light_on}".encode())
+    await js.subscribe("publishers.publisher", cb=status_handler)
+
+    await js.publish("publishers.device", f"lights.{light_room}.{light_name}.{light_on}".encode())
 
     try:
         while True:

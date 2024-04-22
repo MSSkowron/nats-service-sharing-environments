@@ -11,21 +11,12 @@ async def publish_message():
     nc = await nats.connect("nats://admin:admin@nats2:4222")
     js = nc.jetstream()
 
-    # to remove
-    try:
-        await js.delete_stream(name="device-stream")
-    except:
-        pass
-    finally:
-        await js.add_stream(name="device-stream",
-                            subjects=["lights/change", "publisher/add", "publisher/detect"])
-
-    await nc.publish("publisher/detect", struct.pack('?', True))
+    await nc.publish("publishers.publisher", struct.pack('?', True))
 
     async def device_handler(msg):
         device = msg.data.decode()
 
-        device_type, device_room, device_name, device_data = device.split("/")
+        device_type, device_room, device_name, device_data = device.split(".")
 
         if device_type not in devices:
             devices[device_type] = {}
@@ -37,19 +28,21 @@ async def publish_message():
             devices[device_type][device_room][device_name] = {}
 
         if devices[device_type][device_room][device_name] == {}:
-            print(f"DEVICE: {device}")
             devices[device_type][device_room][device_name] = {device_data}
 
-    await js.subscribe("publisher/add", cb=device_handler)
+        print(f"Added new device: {device}")
+
+    await js.subscribe("publisher.device", cb=device_handler)
 
     try:
         while True:
             await asyncio.sleep(1)
+            rand = random.random()
             if random.random() < 0.5:
-                await js.publish("lights/change", struct.pack('?', True))
+                await js.publish("lights.change", struct.pack('?', True))
                 print("Published message: 'on'")
             else:
-                await js.publish("lights/change", struct.pack('?', False))
+                await js.publish("lights.change", struct.pack('?', False))
                 print("Published message: 'off'")
     except KeyboardInterrupt:
         print("Publisher stopped.")

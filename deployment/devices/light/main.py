@@ -40,7 +40,7 @@ async def main(light_name, light_room):
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print("Usage: python light.py <light_name> <light_room>")
+        print("Usage: python main.py <light_name> <light_room>")
         sys.exit(1)
 
     name = sys.argv[1]

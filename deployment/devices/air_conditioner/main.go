@@ -58,7 +58,7 @@ func main() {
 	signal.Notify(c, os.Interrupt)
 	<-c
 
-	nc.Drain()
+	_ = nc.Drain()
 
 	slog.Info("Exiting...")
 }

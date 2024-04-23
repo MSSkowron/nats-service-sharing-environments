@@ -254,51 +254,30 @@ Before initiating the deployment of IoT devices, ensure that your NATS cluster i
 
 ### Devices
 
-To deploy IoT devices, follow these steps:
+To start IoT devices, run the following command:
 
-- **Lights**
+```sh
+./deployment/devices/run.sh <number_of_air_conditioners> <number_of_fridges> <number_of_furnaces> <number_of_lights>
+```
 
-  Run the command below, replacing <number_of_lights> with the desired quantity of lights:
+Replace:
 
-  ```sh
-  ./deployment/devices/light/run.sh <number_of_lights>
-  ```
-
-- **Air Conditioners**
-
-  Run the following command, replacing <number_of_air_conditioners> with the desired quantity of air conditioners:
-
-  ```sh
-  ./deployment/devices/air_conditioner/run.sh <number_of_air_conditioners>
-  ```
-
-- **Fridges**
-
-  Run the following command, replacing <number_of_fridges> with the desired quantity of fridges:
-
-  ```sh
-  ./deployment/devices/fridge/run.sh <number_of_fridges>
-  ```
-
-- **Furnances**
-
-  Run the following command, replacing <number_of_furnances> with the desired quantity of furnances:
-
-  ```sh
-  ./deployment/devices/furnance/run.sh <number_of_furnances>
-  ```
+- `<number_of_air_conditioners>` with the desired quantity of air conditioners.
+- `<number_of_fridges>` with the desired quantity of fridges.
+- `<number_of_furnances>` with the desired quantity of furnaces.
+- `<number_of_lights>` with the desired quantity of lights.
 
 ### Publisher
 
-Run the following command to start the publisher:
+To start publishers, run the following command, replacing `<number_of_publishers>` with the desired quantity of publishers:
 
 ```sh
-./deployment/publisher/run.sh
+./deployment/publisher/run.sh <number_of_publishers>
 ```
 
 ### Admin
 
-Run the following command to start the admin:
+To start the admin, run the following command:
 
 ```sh
 ./deployment/admin/run.sh

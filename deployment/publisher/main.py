@@ -10,7 +10,6 @@ devices = {
 async def publish_message():
     nc = await nats.connect("nats://admin:admin@nats2:4222")
     js = nc.jetstream()
-
     await nc.publish("publishers.publisher", struct.pack('?', True))
 
     async def device_handler(msg):
@@ -31,14 +30,13 @@ async def publish_message():
             devices[device_type][device_room][device_name] = {device_data}
 
         print(f"Added new device: {device}")
-
-    await js.subscribe("publisher.device", cb=device_handler)
-
+    
+    await js.subscribe("publishers.device", cb=device_handler)
     try:
         while True:
             await asyncio.sleep(1)
             rand = random.random()
-            if random.random() < 0.5:
+            if rand < 0.5:
                 await js.publish("lights.change", struct.pack('?', True))
                 print("Published message: 'on'")
             else:
@@ -51,4 +49,5 @@ async def publish_message():
 
 
 if __name__ == '__main__':
+    print("START")
     asyncio.run(publish_message())

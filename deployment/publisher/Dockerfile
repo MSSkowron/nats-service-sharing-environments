@@ -11,4 +11,4 @@ COPY main.py .
 RUN pip install nats-py
 
 # Define the command to run the script
-CMD ["python", "main.py"]
+CMD ["python","-u", "main.py"]

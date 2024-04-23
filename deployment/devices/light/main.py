@@ -2,6 +2,7 @@ import sys
 import asyncio
 import nats
 import struct
+import os
 
 light_on = False
 
@@ -43,7 +44,7 @@ if __name__ == '__main__':
         print("Usage: python main.py <light_name> <light_room>")
         sys.exit(1)
 
-    name = sys.argv[1]
-    room = sys.argv[2]
-
+    name = os.environ.get('LIGHT_NAME')
+    room = os.environ.get('LIGHT_ROOM')
+    print(name,room)
     asyncio.run(main(name, room))

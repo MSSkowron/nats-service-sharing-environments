@@ -13,9 +13,9 @@ import (
 
 const (
 	url         = "nats://admin:admin@nats3:4222"
-	queueName   = "air_conditioners_queue"
-	subjectTurn = "turn_conditioner"
-	subjectSet  = "set_temperature"
+	queueName   = "airconditionersqueue"
+	subjectTurn = "airconditionersturn"
+	subjectSet  = "airconditionersset"
 	defaultTemp = 20
 	maxTemp     = 30
 	minTemp     = 0
@@ -43,7 +43,7 @@ func main() {
 	if _, err := js.QueueSubscribe(subjectTurn, queueName, handleTurn); err != nil {
 		panic(err)
 	}
-	if _, err := js.QueueSubscribe(subjectSet, queueName, handleSet); err != nil {
+	if _, err := js.Subscribe(subjectSet, handleSet); err != nil {
 		panic(err)
 	}
 
@@ -52,7 +52,7 @@ func main() {
 		panic(err)
 	}
 
-	slog.Info("Waiting for messages...", "name", name, "subjects", "subject_turn_conditioner, subject_set_temperature", "queue", queueName)
+	slog.Info("Waiting for messages...", "name", name, "subjects", "airconditionersturn, airconditionersset", "queue", queueName)
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)

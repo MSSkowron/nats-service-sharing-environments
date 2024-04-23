@@ -18,7 +18,6 @@ async def main(name, room):
     async def furnance_handler(msg):
           global is_off, fuel
           turnOn = struct.unpack('?', msg.data)[0]
-          print("TurnOn: ",turnOn)
           if turnOn:
             if fuel > 10:
               fuel-=10
@@ -37,7 +36,6 @@ async def main(name, room):
             # await js.publish(msg.reply, reply)
           reply = f"Default"
           await msg.respond(reply.encode("utf8"))
-          # print(f"Received message: {turnOn}")
 
     async def status_handler(msg):
         global is_off
@@ -45,8 +43,8 @@ async def main(name, room):
 
     
 
-    # await js.subscribe(f"furnances.{room}.{name}.change", cb=furnance_handler)
-    # await js.subscribe(f"furnances.{room}.change", cb=furnance_handler)
+    await nc.subscribe(f"furnances.{room}.{name}.change", cb=furnance_handler)
+    await nc.subscribe(f"furnances.{room}.change", cb=furnance_handler)
     await nc.subscribe("furnances.change", cb=furnance_handler)
 
     

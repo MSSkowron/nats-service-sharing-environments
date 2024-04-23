@@ -11,4 +11,4 @@ COPY main.py .
 RUN pip install nats-py
 
 # Define the command to run the script
-CMD ["python","-u", "main.py", "${FRIDGE_NAME}", "${FRIDGE_ROOM}"]
+CMD ["python","-u", "main.py"]

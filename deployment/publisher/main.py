@@ -38,9 +38,21 @@ async def publish_message():
             rand = random.random()
             if rand < 0.5:
                 await js.publish("lights.change", struct.pack('?', True))
+                await js.publish("fridges.change", struct.pack('?', True))
+                future = nc.request("furnances.change", struct.pack('?', True))
+                msg = await future
+                subject = msg.subject
+                data = msg.data.decode()
+                print(f"Received  [{subject}]: '{data}'")
                 print("Published message: 'on'")
             else:
                 await js.publish("lights.change", struct.pack('?', False))
+                await js.publish("fridges.change", struct.pack('?', False))
+                future = nc.request("furnances.change", struct.pack('?', False))
+                msg = await future
+                subject = msg.subject
+                data = msg.data.decode()
+                print(f"Received  [{subject}]: '{data}'")
                 print("Published message: 'off'")
     except KeyboardInterrupt:
         print("Publisher stopped.")
@@ -51,3 +63,5 @@ async def publish_message():
 if __name__ == '__main__':
     print("START")
     asyncio.run(publish_message())
+
+

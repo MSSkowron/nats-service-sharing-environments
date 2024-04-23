@@ -2,6 +2,7 @@ import sys
 import asyncio
 import nats
 import struct
+import os
 
 is_off = True
 
@@ -21,12 +22,12 @@ async def main(name, room):
 
     async def status_handler(msg):
         global is_off
-        await js.publish("publisher.add", f"fridge.{name}.{not is_off}".encode())
+        await js.publish("publishers.add", f"fridge.{name}.{not is_off}".encode())
 
 
-    await js.subscribe(f"fridge.{room}.{name}.change", cb=fridge_handler)
-    await js.subscribe(f"fridge.{room}.change", cb=fridge_handler)
-    await js.subscribe("fridge.change", cb=fridge_handler)
+    await js.subscribe(f"fridges.{room}.{name}.change", cb=fridge_handler)
+    await js.subscribe(f"fridges.{room}.change", cb=fridge_handler)
+    await js.subscribe("fridges.change", cb=fridge_handler)
 
     await js.subscribe("publishers.publisher", cb=status_handler)
 
@@ -42,9 +43,6 @@ async def main(name, room):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print("Usage: python fridge.py <fridge_name> <fridge_room>")
-        sys.exit(1)
-    name = sys.argv[1]
-    room = sys.argv[1]
+    name = os.environ.get('FRIDGE_NAME')
+    room = os.environ.get('FRIDGE_ROOM')
     asyncio.run(main(name,room))

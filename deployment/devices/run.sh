@@ -54,3 +54,5 @@ for ((i=1; i<=$4; i++)); do
 
     docker run --net "$NETWORK_NAME" -e LIGHT_NAME="$LIGHT_NAME" -e LIGHT_ROOM="$LIGHT_ROOM" -d --name "$LIGHT_NAME" light &
 done
+
+wait

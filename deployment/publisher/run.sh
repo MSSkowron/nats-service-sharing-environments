@@ -15,6 +15,4 @@ for ((i=1; i<=$1; i++)); do
     docker run --net "$NETWORK_NAME" -e PUBLISHER_NAME="$PUBLISHER_NAME" -d --name "$PUBLISHER_NAME" publisher &
 done
 
-docker run --net suu -d publisher
-
 wait

@@ -39,6 +39,10 @@ async def publish_message():
             if rand < 0.5:
                 await js.publish("lights.change", struct.pack('?', True))
                 await js.publish("fridges.change", struct.pack('?', True))
+                rand_temp = random.randint(20, 30)
+                await js.publish("airconditionersset", str(rand_temp).encode())
+                if random.random() < 0.2:
+                    await js.publish("airconditionersturn", b'2')
                 future = nc.request("furnances.change", struct.pack('?', True))
                 msg = await future
                 subject = msg.subject

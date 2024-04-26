@@ -30,7 +30,7 @@ async def publish_message():
             devices[device_type][device_room][device_name] = {device_data}
 
         print(f"Added new device: {device}")
-    
+
     await js.subscribe("publishers.device", cb=device_handler)
     try:
         while True:
